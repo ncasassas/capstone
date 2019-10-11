@@ -40,19 +40,26 @@ def modelacion(lb_por_industria, ub_por_industria, ret_min_por_industria,
                              lb_entre_industrias,
                              ub_entre_industrias,
                              ret_min_entre_industrias]}
+
+    obj = {'obj': m.objVal}
+
     total.update(params)
+    total.update(obj)
 
     return total
+
 
 '''
 Parámetros
 '''
+
 lb_por_industria = 0.03
 ub_por_industria = 0.1
-ret_min_por_industria = 0.001
+ret_min_por_industria = 0.000032229
 lb_entre_industrias = 0.05
-ub_entre_industrias = 0.25
-ret_min_entre_industrias = 0.001
+ub_entre_industrias = 0.2022
+ret_min_entre_industrias = 0.000032229
+
 
 inicio = time.time()
 
@@ -61,9 +68,20 @@ m = modelacion(lb_por_industria, ub_por_industria, ret_min_por_industria,
 
 final = time.time()
 
-with open(f'Resultados acciones.json', 'w') as file:
+with open(f'Resultados acciones diego 2.json', 'w') as file:
     dicto = json.dumps(m)
     file.write(dicto)
 
 tiempo = final - inicio
 print(f'El modelo demoró {tiempo:.2f} segundos en correr.')
+print(m)
+
+
+"""
+for i in range(11):
+    m = modelacion(0.01 + i * 0.002, 0.1 + i * 0.005, 0.001, 0.01 + i * 0.002,
+                   0.1 + i * 0.005, 0.001)
+    with open(f'Resultados acciones{i}.json', 'w') as file:
+        dicto = json.dumps(m)
+        file.write(dicto)
+"""
